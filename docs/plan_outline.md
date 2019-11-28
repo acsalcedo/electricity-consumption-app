@@ -40,13 +40,13 @@ Use current_ip_address to figure out user's current country (no need for filter 
     ```
 
 - Fetch access of electricity for each country (by year): https://api.worldbank.org/v2/country/all/indicator/1.1_ACCESS.ELECTRICITY.TOT?format=json
-  - Get values: `country.id`, `value`, `year`.
+  - Get values: `country.id`, `value`, `date`.
   - If EnergyRanking for the current year and country doesn't exist, create it:
       ```ruby
       EnergyRanking.new(
         id: SecureRandom.uuid,
         country_id: get_country_by_world_bank_id(country.id).id,
-        year: year,
+        year: date,
         access: value,
         consumption: 0
       )
