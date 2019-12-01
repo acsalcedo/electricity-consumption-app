@@ -11,7 +11,7 @@ class Country(models.Model):
 
 class Ranking(models.Model):
   country = models.ForeignKey(Country, on_delete=models.CASCADE)
-  year = models.CharField(max_length=4)
+  year = models.CharField(max_length=4, blank=True)
   electricity_access = models.DecimalField(max_digits=20, decimal_places=3, null=True)
   energy_consumption = models.DecimalField(max_digits=20, decimal_places=3, null=True)
 
