@@ -39,7 +39,7 @@ class Command(BaseCommand):
         "country_id": data["country"]["id"],
         "country_name": data["country"]["value"],
         "year": data["date"],
-        "access": data["value"] or 0
+        "access": data["value"]
       }
       return energy_ranking_dict
 
@@ -48,7 +48,7 @@ class Command(BaseCommand):
         "country_id": data["country"]["id"],
         "country_name": data["country"]["value"],
         "year": data["date"],
-        "consumption": data["value"] or 0
+        "consumption": data["value"]
       }
       return energy_ranking_dict
 
