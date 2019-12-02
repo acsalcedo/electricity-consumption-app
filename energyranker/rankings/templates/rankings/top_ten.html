@@ -1,0 +1,35 @@
+
+{% extends "rankings/base.html" %}
+
+{% block title %}Energy Ranker{% endblock %}
+
+{% block content %}
+  <div class="container">
+    <form action="" method="get">
+      {{ filter.form.as_p }}
+      {{ filter_backends.form.as_p }}
+      <input type="submit" />
+    </form>
+      <table class="table">
+        <thead>
+          <tr>
+            <th scope="col">Country</th>
+            <th scope="col">Year</th>
+            <th scope="col">Electricity Access</th>
+            <th scope="col">Energy Consumption</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for energy_ranking in top_ten_list %}
+            <tr>
+              <td>{{ energy_ranking.country.name }}</td>
+              <td>{{ energy_ranking.year }}</td>
+              <td>{{ energy_ranking.electricity_access }}</td>
+              <td>{{ energy_ranking.energy_consumption }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+  </div>
+
+{% endblock %}

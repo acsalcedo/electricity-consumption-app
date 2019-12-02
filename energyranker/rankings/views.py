@@ -1,15 +1,21 @@
-from django_filters import rest_framework as filters
 from rest_framework import mixins, viewsets
 from rest_framework.filters import OrderingFilter
-from .serializers import RankingSerializer
+from django_filters import rest_framework as filters
+from django_filters.views import FilterView
+from django_filters import widgets
 from django_filters.rest_framework import DjangoFilterBackend, FilterSet
+from django.http import HttpResponse
+from django.views import generic
+from django.db.models import Sum, Count
 
+from .serializers import RankingSerializer
 from .models import Ranking
 
 class RankingFilter(FilterSet):
+    o = filters.OrderingFilter(fields=['energy_consumption', "electricity_access"], widget=widgets.LinkWidget)
     class Meta:
         model = Ranking
-        fields = ['country', 'year']
+        fields = ['country', 'year', "o"]
 
 
 class CustomBackendOrderingFilter(OrderingFilter):
@@ -31,3 +37,12 @@ class RankingViewSet(mixins.ListModelMixin, mixins.RetrieveModelMixin, viewsets.
     filterset_class = RankingFilter
     filter_backends = [filters.DjangoFilterBackend, CustomBackendOrderingFilter]
     ordering_fields = ['energy_consumption', "electricity_access"]
+
+class TopTenView(FilterView):
+    queryset = Ranking.objects.all()
+    filterset_class = RankingFilter
+    filter_backends = [filters.DjangoFilterBackend, CustomBackendOrderingFilter]
+    ordering_fields = ['energy_consumption', "electricity_access"]
+    template_name = "rankings/top_ten.html"
+    context_object_name = "top_ten_list"
+    paginate_by = 10
